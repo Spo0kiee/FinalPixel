@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinalPixel</title>
+  <style>
+    /* Grundlegende Stile */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('http://localhost/FinalPixel/pictures/Background%20Register_Front.jpg') no-repeat center center/cover;
+      min-height: 100vh;
+      color: #fff;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* Dunkles Overlay */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+    header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 2;
+    }
+    .logo {
+      width: 100px;
+      animation: blink 1.5s infinite;
+    }
+    nav.menu {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    nav.menu a {
+      text-decoration: none;
+      color: #FFD700;
+      font-weight: bold;
+      padding: 8px 16px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    nav.menu a:hover {
+      background-color: #FFD700;
+      color: black;
+    }
+    main {
+      z-index: 1;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 900;
+    font-size: 3.5rem;
+    letter-spacing: 0.15em;
+    color: #ffdd55;
+    text-transform: uppercase;
+    text-shadow:
+        0 0 5px #ffd700,
+        0 0 10px #ffb700,
+        0 0 20px #ffa500;
+    margin-bottom: 0.3em;
+    animation: fadeInUp 1.5s ease forwards;
+    }
+    p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.25rem;
+    color: #eee;
+    letter-spacing: 0.05em;
+    margin-top: 0;
+    margin-bottom: 1.5em;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+    animation: fadeInUp 1.8s ease forwards;
+    }
+    /* Animation für sanftes Hochfahren */
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .speech-bubble {
+      position: absolute;
+      bottom: 140px;
+      background-color: white;
+      padding: 10px 20px;
+      left: 50%; /* von 50% auf 60% nach rechts verschoben */
+      transform: translateX(-50%);
+      bottom: 120px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      font-size: 16px;
+      color: #333;
+      opacity: 0;
+      animation: bubbleFade 6s ease-in-out infinite;
+      z-index: 3;
+    }
+    .knight {
+      position: absolute;
+      bottom: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: auto;
+      z-index: 2;
+      animation: knightUp 6s ease-in-out infinite;
+    }
+
+    /* Animationen */
+    @keyframes knightUp {
+      0% { bottom: -120px; }
+      25% { bottom: 10px; }
+      50% { bottom: 10px; }
+      75% { bottom: 10px; }
+      100% { bottom: -120px; }
+    }
+    @keyframes bubbleFade {
+      0%, 100% { opacity: 0; }
+      25%, 75% { opacity: 1; }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      p { font-size: 1rem; }
+      .knight { width: 150px; }
+      nav.menu { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="http://localhost/FinalPixel/pictures/FinalPixel Logo.png" alt="FinalPixel Logo" class="logo">
+  </header>
+
+  <main>
+    <h1>Willkommen bei FinalPixel</h1>
+    <p>Alle Spiele, die du brauchst – an einem Ort!</p>
+    <nav class="menu">
+      <a href="Startseite.php">🏠 Home</a>
+      <a href="Registrierung.php">🗒 Register</a>
+      <a href="login.php">🔐 Login</a>
+      <a href="plattform.php">👜 Products</a>
+    </nav>
+    <div class="speech-bubble">🌞 SummerTime Madness!</div>
+    <img src="http://localhost/FinalPixel/pictures/Ritter.png" alt="Ritter" class="knight">
+  </main>
+</body>
+</html>
