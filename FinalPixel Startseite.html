@@ -35,18 +35,29 @@
       z-index: 0;
     }
     header {
-      position: absolute;
-      top: 20px;
-      left: 20px;
       display: flex;
+      justify-content: center;
+      align-items: center;
       flex-direction: column;
-      gap: 10px;
       z-index: 2;
+      margin-bottom: 20px;
     }
-    .logo {
-      width: 100px;
-      animation: blink 1.5s infinite;
-    }
+.logo {
+  width: 220px;
+  margin-bottom: 10px;
+  animation: zoomIn 2s ease-out forwards, blink 2s infinite;
+}
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
     nav.menu {
       display: flex;
       gap: 15px;
