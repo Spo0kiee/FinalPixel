@@ -18,7 +18,6 @@ $conn->close();
     <title>Produkte - <?php echo htmlspecialchars($genre); ?></title>
     <link rel="stylesheet" href="Styles.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
     <style>
     body {
         font-family: Arial, sans-serif;
@@ -32,6 +31,19 @@ $conn->close();
         color: #130e0e;
         scroll-behavior: smooth;
     }
+    html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.Produkte-container {
+    flex: 1;
+}
     </style>
 </head>
 <body>

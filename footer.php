@@ -16,7 +16,6 @@ if (session_status() == PHP_SESSION_NONE) {
         </div>
         <div class="footer-info">
             <p>&copy; <?php echo date('Y'); ?> FinalPixel. Alle Rechte vorbehalten.</p>
-            <p>Entwickelt von Luka Djekic</p>
         </div>
     </div>
 </footer>
