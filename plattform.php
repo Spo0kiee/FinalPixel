@@ -1,16 +1,16 @@
 <?php
-// Verbindung zur Datenbank
+// Verbindung zur Datenbank herstellen
 require_once 'db_connect.php';
 
-// Plattform und Genre aus der URL holen
+// Plattform und Genre aus der URL holen (GET-Parameter)
 $plattform = isset($_GET['plattform']) ? $_GET['plattform'] : '';
 $genre = isset($_GET['genre']) ? $_GET['genre'] : '';
 
-// Sicherheit gegen SQL-Injections
+// Schutz vor SQL-Injection durch Escaping der Parameter
 $plattform = $conn->real_escape_string($plattform);
 $genre = $conn->real_escape_string($genre);
 
-// SQL-Query
+// SQL-Abfrage basierend auf den Filtern
 $sql = "SELECT * FROM Produkte WHERE Plattform LIKE '%$plattform%' AND Genre LIKE '%$genre%'";
 $result = $conn->query($sql);
 ?>
@@ -22,6 +22,7 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Styles.css" type="text/css" />
     <style>
+        /* Allgemeine Layout- und Hintergrundgestaltung */
         body {
             font-family: Arial, sans-serif;
             background-image: url('http://localhost/FinalPixel/pictures/Market.jpg');
@@ -36,12 +37,16 @@ $result = $conn->query($sql);
             display: flex;
             flex-direction: column;
         }
+
+        /* Main-Bereich mittig + responsiv */
         main {
             padding: 20px;
             flex: 1;
             display: flex;
             justify-content: center;
         }
+
+        /* Container für Filter + Spieleanzeige */
         .filter-container {
             display: flex;
             justify-content: space-between;
@@ -53,6 +58,8 @@ $result = $conn->query($sql);
             animation: fadeIn 1s ease-in-out;
             width: 80%;
         }
+
+        /* Spieleanzeige */
         .filter-game-foreshow {
             display: flex;
             flex-wrap: wrap;
@@ -60,6 +67,8 @@ $result = $conn->query($sql);
             justify-content: center;
             flex: 1;
         }
+
+        /* Einzelne Spielekarte */
         .filter-game-window {
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid #ccc;
@@ -70,28 +79,36 @@ $result = $conn->query($sql);
             padding: 10px;
             transition: transform 0.3s, box-shadow 0.3s;
         }
+
+        /* Hover-Effekt auf Spiel */
         .filter-game-window:hover {
             transform: scale(1.05);
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
         }
+
         .filter-game-window img {
             width: 100%;
             height: auto;
             border-radius: 10px;
         }
+
         .filter-game-window h3 {
             margin: 10px 0;
             font-size: 18px;
             color: #333;
         }
+
         .filter-game-window a {
             text-decoration: none;
             color: #007BFF;
             font-weight: bold;
         }
+
         .filter-game-window a:hover {
             text-decoration: underline;
         }
+
+        /* Seitlicher Filterbereich */
         .filters {
             background: rgba(255, 255, 255, 0.9);
             padding: 20px;
@@ -101,13 +118,16 @@ $result = $conn->query($sql);
             overflow-y: auto;
             margin-left: 20px;
         }
+
         .filters h3 {
             margin-top: 0;
         }
+
         .filters label {
             display: block;
             margin: 10px 0 5px;
         }
+
         .filters select,
         .filters button {
             width: 100%;
@@ -116,15 +136,19 @@ $result = $conn->query($sql);
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+
         .filters button {
             background-color: #8b4513;
             color: white;
             cursor: pointer;
             transition: background-color 0.3s;
         }
+
         .filters button:hover {
             background-color: #a0522d;
         }
+
+        /* Einfache Fade-in-Animation */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -133,13 +157,15 @@ $result = $conn->query($sql);
 </head>
 <body>
     <header>
-        <?php include 'header.php'; ?>
+        <?php include 'header.php'; ?> 
     </header>
     <main>
         <div class="filter-container">
+            <!-- Linke Seite: Suchergebnisse -->
             <div class="filter-game-foreshow">
                 <h2>Ergebnisse: <?= htmlspecialchars($plattform ?: 'Alle Plattformen') ?></h2>
                 <?php
+                // Wenn Ergebnisse vorhanden sind, anzeigen
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<div class='filter-game-window'>";
@@ -152,11 +178,15 @@ $result = $conn->query($sql);
                         echo "</div>";
                     }
                 } else {
+                    // Keine Produkte gefunden
                     echo "<p>Keine Spiele für diese Auswahl gefunden.</p>";
                 }
+                // Verbindung schließen
                 $conn->close();
                 ?>
             </div>
+
+            <!-- Rechte Seite: Filterformular -->
             <div class="filters">
                 <h3>Filter</h3>
                 <form method="GET" action="">
@@ -186,6 +216,6 @@ $result = $conn->query($sql);
             </div>
         </div>
     </main>
-    <?php include 'footer.php'; ?>
+    <?php include 'footer.php'; ?> 
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'db_connect.php';
-require 'vendor/autoload.php'; // Ensure PHPMailer is autoloaded
+require 'vendor/autoload.php'; // Sicherstellen, dass PHPMailer automatisch geladen wird
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -10,13 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $method = $_POST['method'];
     $bestellnummer = $_POST['bestellnummer'];
 
-    // Update the order status in the database
+    // Aktualisieren Sie den Bestellstatus in der Datenbank
     $stmt = $conn->prepare("UPDATE bestellungen SET Zahlungsstatus = 'Bezahlt', Zahlungsmethode = ? WHERE Bestellnummer = ?");
     $stmt->bind_param("si", $method, $bestellnummer);
     $stmt->execute();
     $stmt->close();
 
-    // Fetch the order details
+    // Abrufen der Bestelldetails
     $stmt = $conn->prepare("SELECT b.Bestellnummer, b.Bestelldatum, bd.Menge, p.Name, p.Preis, k.Email 
                             FROM bestellungen b
                             JOIN bestellungsdetails bd ON b.Bestellnummer = bd.Bestellnummer
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bestellung = $result->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
 
-    // Send confirmation email using PHPMailer
+    // Bestätigungs-E-Mail mit PHPMailer senden
     $to = $bestellung[0]['Email'];
     $subject = "Bestellbestatigung - FinalPixel";
     $message = "Danke für Ihren Einkauf bei FinalPixel!\n\n";
@@ -53,11 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
-        // Sender and recipient
+        // Absender und Empfänger
         $mail->setFrom('finalpixelco@gmail.com', 'FinalPixel Corporate');
         $mail->addAddress($to);
 
-        // Email content
+        // Email-Inhalt
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body    = nl2br($message);

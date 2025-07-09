@@ -12,9 +12,9 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Verbindung fehlgeschlagen: " . $conn->connect_error);
 }
-// Assuming you have the user ID stored in the session
+// Angenommen, Sie haben die Benutzer-ID in der Sitzung gespeichert
 $userId = $_SESSION['userid'];
-// Fetch user data from the database
+// Benutzerdaten aus der Datenbank abrufen
 $stmt = $conn->prepare("SELECT Name, Email, profilbild, beschreibung FROM kunden WHERE Kundennummer = ?");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -57,21 +57,21 @@ $conn->close();
         <div class="profile-info">
             <h2 id="profile-name"><?php echo htmlspecialchars($name); ?></h2>
             <p id="profile-email">Email: <?php echo htmlspecialchars($email); ?></p>
-            <p id="profile-description">Description: <?php echo htmlspecialchars($beschreibung); ?></p>
+            <p id="profile-description">Beschreibung: <?php echo htmlspecialchars($beschreibung); ?></p>
         </div>
     </div>
 
 
     <!-- Profile Actions -->
     <div class="profile-actions">
-        <button id="edit-profile-btn">Edit Profile</button>
-        <button id="change-password-btn">Change Password</button>
+        <button id="edit-profile-btn">Profil bearbeiten</button>
+        <button id="change-password-btn">Passwort ändern</button>
     </div>
 
 
 <!-- Order History -->
 <div class="games-section">
-    <h3>Your Games</h3>
+    <h3>Ihre Spiele</h3>
         <div class="game-list">
             <div class="game-item">
                 <img src="http://localhost/FinalPixel/pictures/KingdomCome.jpg" alt="Kingdom Come">
@@ -93,13 +93,13 @@ $conn->close();
 <div id="edit-profile-modal" class="modal">
     <div class="modal-content">
         <span class="close" id="close-edit-profile">&times;</span>
-        <h2>Edit Profile</h2>
+        <h2>Profil bearbeiten</h2>
         <form id="edit-profile-form" enctype="multipart/form-data">
-            <label for="profile-pic-input">Profile Picture:</label>
+            <label for="profile-pic-input">Profilbild:</label>
             <input type="file" id="profile-pic-input" name="profile-pic">
-            <label for="profile-description-input">Description:</label>
+            <label for="profile-description-input">Beschreibung:</label>
             <textarea id="profile-description-input" name="profile-description"></textarea>
-            <button type="submit">Save Changes</button>
+            <button type="submit">Änderungen speichern</button>
         </form>
     </div>
 </div>
@@ -108,15 +108,15 @@ $conn->close();
 <div id="change-password-modal" class="modal">
     <div class="modal-content">
         <span class="close" id="close-change-password">&times;</span>
-        <h2>Change Password</h2>
+        <h2>Passwort ändern</h2>
         <form id="change-password-form" action="change_password.php" method="post">
-            <label for="current-password">Current Password:</label>
+            <label for="current-password">Aktuelles Passwort:</label>
             <input type="password" id="current-password" name="current-password" required>
-            <label for="new-password">New Password:</label>
+            <label for="new-password">Neues Passwort:</label>
             <input type="password" id="new-password" name="new-password" required>
-            <label for="confirm-password">Confirm New Password:</label>
+            <label for="confirm-password">Neues Passwort bestätigen:</label>
             <input type="password" id="confirm-password" name="confirm-password" required>
-            <button type="submit">Change Password</button>
+            <button type="submit">Passwort ändern</button>
         </form>
     </div>
 </div>

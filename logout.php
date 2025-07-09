@@ -1,7 +1,7 @@
 <?php
 session_start();
 session_destroy();
-header("Location: startseite.php");
+header("Location: FinalPixel Startseite.html");
 exit();
 ?>
 

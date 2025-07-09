@@ -17,10 +17,10 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $userId = $_SESSION['userid']; // Assuming you have the user ID stored in the session
+    $userId = $_SESSION['userid']; 
     $profileDescription = trim($_POST['profile-description']);
 
-    // Handle file upload
+    // Datei-Upload behandeln
     if (isset($_FILES['profile-pic']) && $_FILES['profile-pic']['error'] == UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['profile-pic']['tmp_name'];
         $fileName = $_FILES['profile-pic']['name'];
@@ -29,18 +29,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fileNameCmps = explode(".", $fileName);
         $fileExtension = strtolower(end($fileNameCmps));
 
-        // Sanitize file name
+        // Dateinamen bereinigen
         $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
 
-        // Check if file is an image
+        // Überprüfen, ob die Datei ein Bild ist
         $allowedfileExtensions = array('jpg', 'gif', 'png', 'jpeg');
         if (in_array($fileExtension, $allowedfileExtensions)) {
-            // Directory in which the uploaded file will be moved
+            // Verzeichnis, in das die hochgeladene Datei verschoben wird
             $uploadFileDir = 'uploaded_files/';
             $dest_path = $uploadFileDir . $newFileName;
 
             if (move_uploaded_file($fileTmpPath, $dest_path)) {
-                // Update profile picture in the database
+                // Aktualisiere Profilbild in der Datenbank
                 $stmt = $conn->prepare("UPDATE kunden SET profilbild = ?, beschreibung = ? WHERE Kundennummer = ?");
                 $stmt->bind_param("ssi", $dest_path, $profileDescription, $userId);
 
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Upload failed. Allowed file types: " . implode(',', $allowedfileExtensions);
         }
     } else {
-        // Update description only if no file is uploaded
+        // Aktualisiere die Beschreibung nur, wenn keine Datei hochgeladen wurde
         $stmt = $conn->prepare("UPDATE kunden SET beschreibung = ? WHERE Kundennummer = ?");
         $stmt->bind_param("si", $profileDescription, $userId);
 
